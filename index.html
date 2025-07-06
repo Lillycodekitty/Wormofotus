@@ -67,7 +67,7 @@
 }
   
 .curl {
-  animation: curlUp 2s cubic-bezier(.7,0,.3,1) forwards;
+  animation: curlUp 4s cubic-bezier(.7,0,.3,1) forwards;
 }
 
 @keyframes curlUp {
@@ -139,7 +139,6 @@
 
 
   <script>
-     let pokeCount = 0;
   const bubble = document.getElementById("bubble");
   const judgyLines = [
     "You again? Bold of you to return.",
@@ -257,7 +256,58 @@
 
   ];
 
- function pokeWorm() {
+   const frenchJudgyLines = [
+    "Quelle horreur… you've returned. Again.",
+  "Your touch lacks finesse. Typical.",
+  "Is this interaction, or a cry for help?",
+  "You poke like someone who has never tasted real bread.",
+  "Ah, the desperation… it smells of cheap wine and missed potential.",
+  "Touch me again and I shall scream... in cursive.",
+  "Zis is not poking. Zis is... sacrilege.",
+  "A worm like me does not wriggle for anyone.",
+  "You dare poke le Worm? You have no shame.",
+  "I have met snails with better posture and more ambition.",
+  "Non. Just… non.",
+  "You are as subtle as a baguette to the face.",
+  "Your click is loud. Your energy is louder. Both offend me.",
+  "Poking? In public? Have you no décorum?",
+  "This is why Paris closed its borders to you.",
+  "Your scent… it is giving 'never left the tutorial'.",
+  "Am I judging you? Bien sûr. Constantly.",
+  "Merde. That click offended my entire ancestry.",
+  "Try again—this time with elegance, s’il te plaît.",
+  "Your aura? Baguette without butter.",
+  "One poke closer to le disgrace.",
+  "You reek of 'didn’t read the tooltip.'",
+  "In France, we code with class. You… just code.",
+  "Poke me again, and I shall croak in haute couture.",
+  "Oui oui, you’re needy. We knew.",
+   /* your Parisian venom here */
+  
+  
+  ];
+
+if (pokeCount % 10 === 0 || Math.random() < 0.05) {
+  msg = rareCompliments[Math.floor(Math.random() * rareCompliments.length)];
+} else if (isFrenchMode) {
+  msg = frenchJudgyLines[Math.floor(Math.random() * frenchJudgyLines.length)];
+} else {
+  msg = judgyLines[Math.floor(Math.random() * judgyLines.length)];
+}
+
+// 1. Declare and decide French mode once when page loads
+let pokeCount = 0;
+let isFrenchMode = false;
+
+if (Math.random() < 0.2) {
+  isFrenchMode = true;
+  document.getElementById("worm-name").innerHTML = "🐛 Le Wormofotus 🇫🇷";
+} else {
+  document.getElementById("worm-name").innerHTML = "🐛 Wormofotus 🐛";
+}
+
+// 2. Then your poke function uses that decision every time it runs
+function pokeWorm() {
   const bubble = document.getElementById("bubble");
   const wormContainer = document.getElementById("worm-container");
   const face = document.getElementById("judgement-face");
@@ -265,9 +315,10 @@
   pokeCount++;
 
   let msg;
-  // Compliment shows up once every 10 pokes or randomly 5% chance
   if (pokeCount % 10 === 0 || Math.random() < 0.05) {
     msg = rareCompliments[Math.floor(Math.random() * rareCompliments.length)];
+  } else if (isFrenchMode) {
+    msg = frenchJudgyLines[Math.floor(Math.random() * frenchJudgyLines.length)];
   } else {
     msg = judgyLines[Math.floor(Math.random() * judgyLines.length)];
   }
@@ -275,7 +326,6 @@
   bubble.textContent = `${msg} (Pokes: ${pokeCount})`;
   bubble.style.display = "block";
 
-  // Reset animation and show face
   wormContainer.classList.remove("curl");
   void wormContainer.offsetWidth; // force reflow
   wormContainer.classList.add("curl");
@@ -285,8 +335,9 @@
     wormContainer.classList.remove("curl");
     bubble.style.display = "none";
     face.style.display = "none";
-  }, 5000); // Animation duration (match your CSS)
+  }, 5000);
 }
+
 </script>
 </body>
 </html>
