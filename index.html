@@ -286,13 +286,6 @@
   
   ];
 
-if (pokeCount % 10 === 0 || Math.random() < 0.05) {
-  msg = rareCompliments[Math.floor(Math.random() * rareCompliments.length)];
-} else if (isFrenchMode) {
-  msg = frenchJudgyLines[Math.floor(Math.random() * frenchJudgyLines.length)];
-} else {
-  msg = judgyLines[Math.floor(Math.random() * judgyLines.length)];
-}
 
 // 1. Declare and decide French mode once when page loads
 let pokeCount = 0;
