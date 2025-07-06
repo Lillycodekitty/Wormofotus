@@ -287,6 +287,8 @@
   ];
 
 
+
+  let wormIsBusy = false;
 // 1. Declare and decide French mode once when page loads
 let pokeCount = 0;
 let isFrenchMode = false;
@@ -300,6 +302,8 @@ if (Math.random() < 0.2) {
 
 // 2. Then your poke function uses that decision every time it runs
 function pokeWorm() {
+  if (wormIsBusy) return; // Prevent multiple pokes at once
+  wormIsBusy = true;
   const bubble = document.getElementById("bubble");
   const wormContainer = document.getElementById("worm-container");
   const face = document.getElementById("judgement-face");
@@ -339,6 +343,7 @@ function pokeWorm() {
     wormContainer.classList.remove("curl");
     bubble.style.display = "none";
     face.style.display = "none";
+    wormIsBusy = false;
   }, 5000);
 }
 
