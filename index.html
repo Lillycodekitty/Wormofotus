@@ -194,6 +194,7 @@
       "I'm judging you harder than your therapist ever will.",
       "That energy? It's giving forgotten group project member.",
       "You're like glitter in a wound—loud, shiny, and painful.",
+      "Your art is like your opinion: copy-pasted and emotionally undercooked. 🐛🖕",
       
       // GLITTERY INSULTS
       "Even glitter weeps at your decisions.",
@@ -251,9 +252,7 @@
     "Was that... effort? I'm shocked.",
     "Wow. I almost respected that.",
     "A worm could almost love you today. Almost.",
-    "You did something right. Don’t get used to it.",
-
-
+    "You did something right. Don’t get used to it."
   ];
 
    const frenchJudgyLines = [
@@ -322,6 +321,18 @@ function pokeWorm() {
   } else {
     msg = judgyLines[Math.floor(Math.random() * judgyLines.length)];
   }
+
+  if (msg.includes("copy-pasted and emotionally undercooked")) {
+  wormContainer.style.transition = "none";
+  wormContainer.style.opacity = "0.3";
+  bubble.style.boxShadow = "0 0 20px red";
+
+  setTimeout(() => {
+    wormContainer.style.transition = "";
+    wormContainer.style.opacity = "1";
+    bubble.style.boxShadow = "0 0 10px #ff69b4";
+  }, 3000);
+}
 
   bubble.textContent = `${msg} (Pokes: ${pokeCount})`;
   bubble.style.display = "block";
