@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wormofotus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #1a1a1a;
+      font-family: monospace;
+      overflow: hidden;
+      color: #ff69b4;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+}
+
+    #worm-name {
+      text-align: center;
+      font-size: 18px;
+      color: #ff69b4;
+      margin-top: 20px;
+      user-select: none;
+    }
+
+    #ascii-worm {
+      text-align: center;
+      white-space: pre;
+      font-size: 10px;
+      line-height: 10px;
+      user-select: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #bubble {
+      position: absolute;
+      top: 30%;
+      left: 20%;
+      background: #000000dd;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: none;
+      max-width: 40%;
+      text-align: center;
+      box-shadow: 0 0 10px #ff69b4;
+      user-select: none;
+    }
+
+   #worm-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s ease;
+    position: relative;
+}
+
+#judgement-face {
+  font-size: 5.0em; /* Increase this value for a bigger face */
+}
+  
+.curl {
+  animation: curlUp 2s cubic-bezier(.7,0,.3,1) forwards;
+}
+
+@keyframes curlUp {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+  30% {
+    transform: scale(0.9, 0.8) rotate(10deg);
+    filter: brightness(1.1);
+  }
+  60% {
+    transform: scale(0.7, 0.6) rotate(25deg);
+    filter: brightness(1.2);
+  }
+  80% {
+    transform: scale(0.5, 0.5) rotate(40deg);
+    filter: brightness(0.9);
+  }
+  100% {
+    transform: scale(0.4, 0.4) rotate(60deg);
+    filter: brightness(0.7);
+    border-radius: 50%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div id="worm-name">🐛 Wormofotus 🐛</div>
+  <div id="bubble"></div>
+
+<div id="worm-container" onclick="pokeWorm()">
+  <div id="worm-art-wrap" style="position: relative; display: inline-block;">
+    <span id="judgement-face"
+      style="display:none; position:absolute; left: 15%; top:7%; transform:translate(-50%,0); pointer-events:none; z-index:2;">
+      ಠ_ಠ
+    </span>
+    <pre id="ascii-worm">
+
+         ⢀⣤⣶⠶⣄⡀                              
+ ⢠⣶⣿⣓⢦⡄⢀⣰⣿⠟⠉⠑⣌⣿⠓⠶⣤⡀                          
+⢠⣿⠟⠉⣽⣷⣿⣟⣿⡟ ⢸⣷⢸⢸  ⠹⡏⠳⣄                        
+⠸⣿⡀ ⣿⢇⣇⡟⢻⣳⡀⠘⣿⣏⡾   ⢻ ⠘⢧⡀                      
+ ⠹⣷⣤⣤⢞⡽⠁ ⠳⢽⣻⣽⠟⠁   ⣸  ⠈⣷⡀                     
+  ⠈⢻⠒⠋      ⡀  ⢀⡀⢠⠇  ⢠⡟⣷                     
+   ⢸      ⢀⣼⡇⢠⡾⠛⠻⡟  ⣰⠟ ⠸⣇                    
+   ⠘⡇    ⡠⠋⣿⢀⠟   ⢃⣠⠞⠁   ⢿⡀                   
+    ⠘⠢⠤⠴⠊ ⢰⣧⡞    ⢸     ⣠⢾⡇                   
+          ⠈⠛     ⣼⣄⣀⣀⡤⠞⠉ ⡇                   
+                 ⡏      ⢰⡇                   
+                ⢀⡇      ⣸⠇                   
+                ⢸⠓⠶⠤⢤⣤⠤⢾⡟       ⢀⣴⠞⠛⠳⣦⡀      
+                ⡟      ⣼⠃      ⢠⠏    ⢸⠇      
+               ⢸⣧⣀    ⢠⡏      ⢀⡏     ⡟       
+               ⡿ ⠈⠉⠉⠑⠚⠛⢻⠁      ⢸⡇    ⢸⡇      
+              ⢸⡇      ⡾       ⠘⣧⡴⠖⠒⠒⢬⣧       
+              ⣼⢧⣀⡀   ⣀⣇        ⢹⠁    ⠙⡆      
+              ⣿ ⠈⠉⠉⠉⠉ ⢸⡄       ⢸⣤⠤⣤⣀  ⣷      
+              ⢿      ⢀⡼⢳⣄    ⢀⣴⠋   ⠈⠻⣦⡏      
+              ⠸⣇⣀ ⣀⣠⠔⠋ ⢸⡏⠛⠶⣶⠞⠋⠙⠻⣦⡀   ⡸⠁      
+               ⠹⡍⠉⠁    ⣼⠃  ⠈⢷   ⠈⢻⡄⢀⡜⠁       
+                ⠈⠦⡀   ⣰⠏    ⢸⡇   ⣠⡷⠋         
+                  ⠈⠓⠶⢮⣁⣀⣀⡀⢀⣀⣼⣡⡤⠶⠚⠁           
+                      ⣀⡈⠉⠉⠉⠉      ⢰⠤⠤⡤⠤⠤⠤⠤⢤⡤⠤
+
+  </pre>
+</div>                    
+
+
+  <script>
+     let pokeCount = 0;
+  const bubble = document.getElementById("bubble");
+  const judgyLines = [
+    "You again? Bold of you to return.",
+    "I see you still haven’t evolved.",
+    "Don't touch me. I'm in my existential phase.",
+    "You poke, I judge. It’s the circle of shame.",
+    "That's your move? Sad.",
+    "Even my glitter’s disappointed.",
+    "You smell like effort. Go away.",
+    "Some worms glow. I scorn.",
+    "That click had desperate energy.",
+    "My patience is thinner than your WiFi.",
+    "I wriggle not for you, but despite you.",
+    "You're one poke away from consequences.",
+    "Your vibe? ✨Cringe✨.",
+    "You think you're funny. You're not. I'm funny.",
+    "My tail's more useful than your life choices.",
+    "I sparkle from spite, not joy.",
+    "Touch me again, and I tell the bugs in your phone.",
+    "This interaction has been reported to Glitter HR.",
+    "I’ve seen better behavior from slugs.",
+    "If disappointment had a sound, it would be you clicking.",
+    "You’re not the main character. I am.",
+    "Try again when you’ve earned sparkle privileges.",
+    "I hope this worm haunts your dreams.",
+    "That tap? Emotionally bankrupt.",
+    "I’d say ‘do better,’ but I know you can’t.",
+    "You're the reason I pretend to be offline.",
+    "You poke. I wither. We all suffer.",
+    "I radiate judgment at 200 lumens.",
+    "Poking me won’t fill the void, darling.",
+    "Wormofotus sees all. And he's unimpressed.",
+       // EXISTENTIAL JUDGMENT
+      "You again? I thought we evolved past this.",
+      "That poke had desperate energy.",
+      "Is this all you do? Click and cry?",
+      "You're one glitter flake away from a breakdown.",
+      "Do you poke your problems too? How’s that working out?",
+      "I'm not mad. I'm just—ugh, I am mad.",
+      "If cringe had a form, it’d be your finger.",
+      "Your presence lowered my processing speed.",
+      "This moment will haunt both of us.",
+      "You just screamed ‘emotional damage’ in a click.",
+      
+      // SARCASM & SHADE
+      "Bold of you to assume I want interaction.",
+      "That was... a choice. A wrong one.",
+      "Touch me one more time and I file an HR complaint.",
+      "You must be fun at social events. Oh wait.",
+      "You're poking like that’s your personality.",
+      "Imagine thinking this is peak productivity.",
+      "You poke like someone who double texts... themselves.",
+      "I'm judging you harder than your therapist ever will.",
+      "That energy? It's giving forgotten group project member.",
+      "You're like glitter in a wound—loud, shiny, and painful.",
+      
+      // GLITTERY INSULTS
+      "Even glitter weeps at your decisions.",
+      "I sparkle. You… attempt.",
+      "Your vibe is expired birthday cake.",
+      "I’d roll my eyes if ASCII allowed it.",
+      "You click like your keyboard owes you money.",
+      "If I had glitter for every bad choice you made, I'd collapse the multiverse.",
+      "This worm sees you. And it’s not impressed.",
+      "You're one bad idea away from glitter jail.",
+      "Please seek help. Or a hobby. Or both.",
+      "You poke like someone who uses Comic Sans unironically.",
+
+      // PHILOSOPHICAL MELTDOWN
+      "Do worms feel shame? I do. On your behalf.",
+      "I was born in code and still feel more emotion than you.",
+      "You make even virtual organisms wish for reincarnation.",
+      "This interaction will be cited in my villain origin story.",
+      "I hope your glitter allergies flare just thinking about me.",
+      "Wormofotus watches. Wormofotus remembers.",
+      "Every poke fuels my desire to ascend… away from you.",
+      "There is no salvation. Only judgment and sparkle.",
+      "You've triggered my disappointment subroutine.",
+      "The void called. Even it’s less bleak than this moment.",
+      "That click? Sweetie… try again. With effort this time.",
+  "I’ve seen better choices at a gas station vending machine.",
+  "You're the human version of 'low battery'.",
+  "Did you mean to poke me, or was that your last brain cell misfiring?",
+  "Confidence is cute. Delusion? Not so much.",
+  "You're not wrong… you're just frequently disappointing.",
+  "You poked me like someone who lies about reading the terms & conditions.",
+  "I don’t hate you. I just don’t respect you. Big difference.",
+  "Ah, the ‘poke and hope’ strategy. Classic.",
+  "You’re like glitter in soup. Unexpected and not entirely welcome.",
+  "I’d raise an eyebrow, but I’m made of pixels and salt.",
+  "Every poke tells me you peaked during online learning.",
+  "I'm not saying you're basic, but Starbucks just named a drink after you.",
+  "You could have been anything. You chose this.",
+  "At least you’re consistent. Consistently mediocre.",
+  "You poke like someone who has too many tabs open in life.",
+  "You bring the same energy as autocorrect fails and forgotten group projects.",
+  "That effort? It’s giving ‘ran out of f*cks at 3pm.’",
+  "Ah yes, a decision was made. And not a good one.",
+  "Every click you make is a reminder that common sense is rare."
+    // Add more judgment as needed...
+  ];
+
+  const rareCompliments = [
+    "That poke? Surprisingly tolerable today.",
+    "Look at you, making semi-decent choices.",
+    "You’re not completely unbearable.",
+    "That click had... dare I say... taste?",
+    "For once, I don’t feel like rebooting out of spite.",
+    "You're still a mess, but today it’s a cute mess.",
+    "Was that... effort? I'm shocked.",
+    "Wow. I almost respected that.",
+    "A worm could almost love you today. Almost.",
+    "You did something right. Don’t get used to it.",
+
+
+  ];
+
+ function pokeWorm() {
+  const bubble = document.getElementById("bubble");
+  const wormContainer = document.getElementById("worm-container");
+  const face = document.getElementById("judgement-face");
+
+  pokeCount++;
+
+  let msg;
+  // Compliment shows up once every 10 pokes or randomly 5% chance
+  if (pokeCount % 10 === 0 || Math.random() < 0.05) {
+    msg = rareCompliments[Math.floor(Math.random() * rareCompliments.length)];
+  } else {
+    msg = judgyLines[Math.floor(Math.random() * judgyLines.length)];
+  }
+
+  bubble.textContent = `${msg} (Pokes: ${pokeCount})`;
+  bubble.style.display = "block";
+
+  // Reset animation and show face
+  wormContainer.classList.remove("curl");
+  void wormContainer.offsetWidth; // force reflow
+  wormContainer.classList.add("curl");
+  face.style.display = "block";
+
+  setTimeout(() => {
+    wormContainer.classList.remove("curl");
+    bubble.style.display = "none";
+    face.style.display = "none";
+  }, 5000); // Animation duration (match your CSS)
+}
+</script>
+</body>
+</html>
